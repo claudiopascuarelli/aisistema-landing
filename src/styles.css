@@ -1,0 +1,144 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Aisistema — Ocean Deep palette
+ * bg #0c2340 · surface #1a4a6e · primary #2d8a9e · accent #5cbdb9
+ * Headings: JetBrains Mono · Body: Work Sans
+ */
+
+@theme inline {
+  --font-sans: "Work Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Ocean Deep — dark by default */
+  --background: oklch(0.21 0.05 245);          /* #0c2340 */
+  --foreground: oklch(0.97 0.01 230);
+  --surface: oklch(0.32 0.07 235);             /* #1a4a6e */
+  --surface-foreground: oklch(0.97 0.01 230);
+
+  --card: oklch(0.26 0.06 240);
+  --card-foreground: oklch(0.97 0.01 230);
+  --popover: oklch(0.26 0.06 240);
+  --popover-foreground: oklch(0.97 0.01 230);
+
+  --primary: oklch(0.62 0.10 210);             /* #2d8a9e teal */
+  --primary-foreground: oklch(0.15 0.04 245);
+  --secondary: oklch(0.32 0.07 235);
+  --secondary-foreground: oklch(0.97 0.01 230);
+  --muted: oklch(0.28 0.05 240);
+  --muted-foreground: oklch(0.72 0.04 230);
+  --accent: oklch(0.80 0.09 195);              /* #5cbdb9 aqua */
+  --accent-foreground: oklch(0.15 0.04 245);
+
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.62 0.10 210);
+}
+
+.dark {
+  /* Same values — site is dark by default */
+  --background: oklch(0.21 0.05 245);
+  --foreground: oklch(0.97 0.01 230);
+  --surface: oklch(0.32 0.07 235);
+  --surface-foreground: oklch(0.97 0.01 230);
+  --card: oklch(0.26 0.06 240);
+  --card-foreground: oklch(0.97 0.01 230);
+  --popover: oklch(0.26 0.06 240);
+  --popover-foreground: oklch(0.97 0.01 230);
+  --primary: oklch(0.62 0.10 210);
+  --primary-foreground: oklch(0.15 0.04 245);
+  --secondary: oklch(0.32 0.07 235);
+  --secondary-foreground: oklch(0.97 0.01 230);
+  --muted: oklch(0.28 0.05 240);
+  --muted-foreground: oklch(0.72 0.04 230);
+  --accent: oklch(0.80 0.09 195);
+  --accent-foreground: oklch(0.15 0.04 245);
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.62 0.10 210);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    background-color: var(--color-background);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Subtle grid background helper */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, oklch(1 0 0 / 4%) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(1 0 0 / 4%) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.7s ease-out forwards;
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
