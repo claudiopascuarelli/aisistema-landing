@@ -1,0 +1,6 @@
+{
+  "buildCommand": "bun run build && cp -r dist/client/assets public/assets",
+  "rewrites": [
+    { "source": "/((?!assets/).*)", "destination": "/api/ssr" }
+  ]
+}
