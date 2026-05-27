@@ -1,6 +1,6 @@
 {
-  "buildCommand": "bun run build && cp -r dist/client/assets public/assets",
+  "outputDirectory": "dist/client",
   "rewrites": [
-    { "source": "/((?!assets/).*)", "destination": "/api/ssr" }
+    { "source": "/((?!assets/|robots\\.txt|sitemap\\.xml).*)", "destination": "/api/ssr" }
   ]
 }
