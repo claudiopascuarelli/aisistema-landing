@@ -9,7 +9,6 @@ import {
   BarChart3,
   Building2,
   Check,
-  ArrowRight,
   MessageCircle,
   Linkedin,
   Mail,
@@ -47,9 +46,15 @@ import { submitLead } from "@/lib/leads.functions";
 import dashboardMockup from "@/assets/dashboard-mockup.png";
 
 const SITE_URL = "https://aisistema.net";
-const TITLE = "Aisistema — Software de gestión a medida para PyMEs argentinas";
+const TITLE = "AISistema | Gestión e inteligencia artificial para negocios";
 const DESC =
-  "Sistema de gestión modular: ventas, stock, facturación AFIP, clientes y reportes. Implementación rápida y atención personalizada para PyMEs en Argentina.";
+  "Soluciones de gestión, automatización e inteligencia artificial para PyMEs y comercios. Ordená ventas, stock, clientes, caja y procesos administrativos desde un solo lugar.";
+
+const WA_NUMBER = "5491162488744";
+const WA_MSG = encodeURIComponent(
+  "Hola, quiero información sobre AIGestión. Mi negocio es: _____ y actualmente gestiono con: _____"
+);
+const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 
 const FAQS = [
   {
@@ -107,24 +112,26 @@ const MODULOS = [
   },
 ];
 
-const TESTIMONIOS = [
+const PROBLEMAS = [
   {
-    cita:
-      "Pasamos de Excel a Aisistema en tres semanas. Hoy facturamos sin frenar la operación y sé el stock real de cada producto en tiempo real.",
-    autor: "Mariano S.",
-    cargo: "Distribuidora mayorista · Rosario",
+    titulo: "Negocios que todavía usan Excel, papel o mensajes sueltos",
+    desc: "Sin un sistema central, la información se pierde y las decisiones se toman a ciegas.",
   },
   {
-    cita:
-      "Lo que más valoro es que hablamos con la misma persona desde el día uno. Si pido un cambio, en dos días está hecho.",
-    autor: "Carolina P.",
-    cargo: "Cadena de indumentaria · CABA",
+    titulo: "Comercios sin claridad sobre ventas, stock o caja",
+    desc: "No saber qué entra, qué sale y cuánto queda genera errores y oportunidades perdidas.",
   },
   {
-    cita:
-      "Probamos tres sistemas enlatados antes. Ninguno se adaptaba al rubro. Aisistema lo hizo en la mitad del presupuesto que pedían los otros.",
-    autor: "Diego R.",
-    cargo: "Comercio minorista · Córdoba",
+    titulo: "Empresas que pierden tiempo en tareas repetitivas",
+    desc: "Cargar datos dos veces, hacer reconciliaciones manuales o buscar información en distintos lugares.",
+  },
+  {
+    titulo: "Equipos que necesitan reportes simples para decidir mejor",
+    desc: "La información existe pero está dispersa. Hace falta consolidarla en un lugar claro.",
+  },
+  {
+    titulo: "Negocios que quieren ordenar sus procesos antes de crecer",
+    desc: "Crecer sobre una base desordenada multiplica los problemas. Ordenar primero es la mejor inversión.",
   },
 ];
 
@@ -164,7 +171,9 @@ function Home() {
         <Hero />
         <MultiDispositivo />
         <Modulos />
-        <Testimonios />
+        <AISection />
+        <Problemas />
+        <VideoPlaceholder />
         <QuienEsta />
         <LeadForm />
         <FAQ />
@@ -191,12 +200,14 @@ function Nav() {
         </a>
         <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
           <a href="#modulos" className="hover:text-foreground">Módulos</a>
-          <a href="#testimonios" className="hover:text-foreground">Clientes</a>
+          <a href="#problemas" className="hover:text-foreground">Para quién</a>
           <a href="#equipo" className="hover:text-foreground">Equipo</a>
           <a href="#faq" className="hover:text-foreground">FAQ</a>
         </nav>
         <Button asChild size="sm" className="font-mono">
-          <a href="#contacto">Solicitar demo</a>
+          <a href={WA_URL} target="_blank" rel="noopener noreferrer">
+            <MessageCircle className="mr-2 h-4 w-4" /> Hablar por WhatsApp
+          </a>
         </Button>
       </div>
     </header>
@@ -209,20 +220,20 @@ function Hero() {
     <section id="top" className="relative overflow-hidden border-b border-border/60">
       <div className="bg-grid absolute inset-0 opacity-60" aria-hidden />
       <div className="absolute inset-x-0 top-0 -z-10 h-[500px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(92,189,185,0.18),transparent)]" />
-      <div className="relative mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 py-14 sm:py-20 lg:py-28 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:py-28">
+      <div className="relative mx-auto grid max-w-6xl gap-12 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:py-28">
         <div className="fade-up">
           <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/60 px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-accent">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-            Hecho en Argentina · para PyMEs
+            AISistema · Primer producto: AIGestión
           </div>
           <h1 className="mt-5 text-[2rem] leading-[1.1] sm:text-4xl md:text-5xl lg:text-[3.4rem] sm:leading-[1.05]">
-            El sistema de gestión que controlás desde{" "}
-            <span className="text-accent">cualquier dispositivo</span>.
+            Gestión e inteligencia artificial{" "}
+            <span className="text-accent">para tu negocio</span>.
           </h1>
           <p className="mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
-            Ventas, stock, facturación AFIP, clientes y reportes en una sola
-            plataforma modular. Implementación en semanas, no en meses, y con la
-            misma persona acompañándote de principio a fin.
+            AIGestión, nuestro primer producto, ayuda a PyMEs y comercios a
+            ordenar ventas, stock, clientes, caja, reportes y procesos
+            administrativos desde un solo lugar.
           </p>
           <ul className="mt-6 grid max-w-md gap-2 text-sm text-muted-foreground">
             {[
@@ -237,8 +248,8 @@ function Hero() {
           </ul>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="font-mono">
-              <a href="#contacto">
-                Solicitar demo <ArrowRight className="ml-2 h-4 w-4" />
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="mr-2 h-4 w-4" /> Hablar por WhatsApp
               </a>
             </Button>
             <Button
@@ -247,7 +258,7 @@ function Hero() {
               variant="outline"
               className="border-border/70 bg-card/40 font-mono"
             >
-              <a href="#modulos">Ver módulos</a>
+              <a href="#contacto">Solicitar demo</a>
             </Button>
           </div>
         </div>
@@ -257,49 +268,12 @@ function Hero() {
           <div className="relative overflow-hidden rounded-xl border border-border/70 bg-card shadow-2xl shadow-primary/20">
             <img
               src={dashboardMockup}
-              alt="Panel de control de Aisistema: ventas del mes $4.2M, stock crítico, facturas emitidas y clientes activos"
+              alt="Panel de control de AIGestión: ventas del mes, stock crítico, facturas emitidas y clientes activos"
               width={1536}
               height={1024}
               className="h-auto w-full"
             />
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ----------------- Módulos ----------------- */
-function Modulos() {
-  return (
-    <section id="modulos" className="border-b border-border/60 py-14 sm:py-14 sm:py-20 lg:py-28">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <header className="max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-wider text-accent">
-            // Módulos
-          </p>
-          <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl">
-            Activá solo lo que necesitás. Sumás más cuando crece tu operación.
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            Cada módulo está pensado para resolver una parte concreta del día a
-            día de una PyME, sin obligarte a pagar features que no usás.
-          </p>
-        </header>
-
-        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {MODULOS.map((m) => (
-            <article
-              key={m.title}
-              className="group rounded-xl border border-border/70 bg-card/60 p-6 transition hover:-translate-y-0.5 hover:border-accent/50"
-            >
-              <div className="grid h-10 w-10 place-items-center rounded-md bg-primary/15 text-accent">
-                <m.icon className="h-5 w-5" />
-              </div>
-              <h3 className="mt-5 font-mono text-lg">{m.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{m.desc}</p>
-            </article>
-          ))}
         </div>
       </div>
     </section>
@@ -324,7 +298,7 @@ function MultiDispositivo() {
             En tu oficina, en la calle, en el depósito.
           </h2>
           <p className="mt-5 text-muted-foreground">
-            Aisistema funciona en cualquier dispositivo. Controlá stock, consultá
+            AIGestión funciona en cualquier dispositivo. Controlá stock, consultá
             precios y seguí ventas desde tu celular, tablet o computadora.
             La misma información, actualizada en tiempo real, donde estés.
           </p>
@@ -359,34 +333,164 @@ function MultiDispositivo() {
   );
 }
 
-/* ----------------- Testimonios ----------------- */
-function Testimonios() {
+/* ----------------- Módulos ----------------- */
+function Modulos() {
   return (
-    <section id="testimonios" className="border-b border-border/60 py-14 sm:py-14 sm:py-20 lg:py-28">
+    <section id="modulos" className="border-b border-border/60 py-14 sm:py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <header className="max-w-2xl">
           <p className="font-mono text-xs uppercase tracking-wider text-accent">
-            // Clientes
+            // Módulos de AIGestión
           </p>
           <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl">
-            PyMEs argentinas que ya operan con Aisistema.
+            Activá solo lo que necesitás. Sumás más cuando crece tu operación.
           </h2>
+          <p className="mt-4 text-muted-foreground">
+            Cada módulo está pensado para resolver una parte concreta del día a
+            día de una PyME, sin obligarte a pagar features que no usás.
+          </p>
         </header>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {TESTIMONIOS.map((t) => (
-            <figure
-              key={t.autor}
-              className="flex h-full flex-col justify-between rounded-xl border border-border/70 bg-card/60 p-6"
+
+        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {MODULOS.map((m) => (
+            <article
+              key={m.title}
+              className="group rounded-xl border border-border/70 bg-card/60 p-6 transition hover:-translate-y-0.5 hover:border-accent/50"
             >
-              <blockquote className="text-sm leading-relaxed text-foreground/90">
-                “{t.cita}”
-              </blockquote>
-              <figcaption className="mt-6 border-t border-border/60 pt-4">
-                <div className="font-mono text-sm">{t.autor}</div>
-                <div className="text-xs text-muted-foreground">{t.cargo}</div>
-              </figcaption>
-            </figure>
+              <div className="grid h-10 w-10 place-items-center rounded-md bg-primary/15 text-accent">
+                <m.icon className="h-5 w-5" />
+              </div>
+              <h3 className="mt-5 font-mono text-lg">{m.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{m.desc}</p>
+            </article>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------- IA Section ----------------- */
+function AISection() {
+  const items = [
+    "Automatizar tareas repetitivas",
+    "Ordenar y consolidar información dispersa",
+    "Generar reportes más claros",
+    "Detectar problemas de gestión",
+    "Asistir procesos administrativos",
+    "Mejorar la toma de decisiones",
+  ];
+  return (
+    <section className="border-b border-border/60 py-14 sm:py-20 lg:py-28">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <header className="max-w-2xl">
+          <p className="font-mono text-xs uppercase tracking-wider text-accent">
+            // Inteligencia artificial
+          </p>
+          <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl">
+            ¿Dónde entra la inteligencia artificial?
+          </h2>
+          <p className="mt-4 text-muted-foreground">
+            Según el caso y la configuración de cada negocio, AISistema puede
+            incorporar automatizaciones e inteligencia artificial para simplificar
+            tareas, mejorar el control y ayudar a tomar mejores decisiones.
+          </p>
+        </header>
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map((item) => (
+            <div
+              key={item}
+              className="flex items-start gap-3 rounded-xl border border-border/70 bg-card/60 p-5 transition hover:-translate-y-0.5 hover:border-accent/50"
+            >
+              <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" />
+              <span className="text-sm text-muted-foreground">{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------- Problemas ----------------- */
+function Problemas() {
+  return (
+    <section id="problemas" className="border-b border-border/60 py-14 sm:py-20 lg:py-28">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <header className="max-w-2xl">
+          <p className="font-mono text-xs uppercase tracking-wider text-accent">
+            // Para quién
+          </p>
+          <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl">
+            Problemas habituales que buscamos resolver.
+          </h2>
+          <p className="mt-4 text-muted-foreground">
+            Si tu negocio se identifica con alguno de estos puntos, AIGestión
+            puede ayudar.
+          </p>
+        </header>
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {PROBLEMAS.map((p) => (
+            <div
+              key={p.titulo}
+              className="rounded-xl border border-border/70 bg-card/60 p-6 transition hover:-translate-y-0.5 hover:border-accent/50"
+            >
+              <h3 className="font-mono text-sm font-semibold leading-snug">
+                {p.titulo}
+              </h3>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                {p.desc}
+              </p>
+            </div>
+          ))}
+          <div className="flex flex-col justify-between rounded-xl border border-accent/40 bg-accent/5 p-6">
+            <div>
+              <h3 className="font-mono text-sm font-semibold leading-snug">
+                ¿Tu caso no está en la lista?
+              </h3>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                Contanos tu situación y vemos cómo podemos ayudarte.
+              </p>
+            </div>
+            <Button asChild size="sm" className="mt-6 w-full font-mono">
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="mr-2 h-4 w-4" /> Hablar por WhatsApp
+              </a>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------- Video Placeholder ----------------- */
+function VideoPlaceholder() {
+  return (
+    <section className="border-b border-border/60 py-14 sm:py-20 lg:py-28">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 text-center">
+        <p className="font-mono text-xs uppercase tracking-wider text-accent">
+          // Video
+        </p>
+        <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl">
+          Conocé AISistema en menos de un minuto
+        </h2>
+        <p className="mt-4 mx-auto max-w-xl text-muted-foreground">
+          Estamos preparando un video breve para mostrar cómo AISistema puede
+          ayudar a ordenar la gestión de un negocio y sumar automatización de
+          forma simple.
+        </p>
+        <div className="mt-10 mx-auto flex aspect-video max-w-2xl items-center justify-center rounded-xl border border-border/70 bg-card/60">
+          <div className="text-center">
+            <div className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-border/70 bg-primary/10 text-accent transition hover:bg-primary/20">
+              <svg className="ml-1 h-7 w-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+            <p className="mt-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              Próximamente
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -396,8 +500,8 @@ function Testimonios() {
 /* ----------------- Quién está detrás ----------------- */
 function QuienEsta() {
   return (
-    <section id="equipo" className="border-b border-border/60 py-14 sm:py-14 sm:py-20 lg:py-28">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:gap-12 sm:px-6 lg:items-center">
+    <section id="equipo" className="border-b border-border/60 py-14 sm:py-20 lg:py-28">
+      <div className="mx-auto max-w-6xl px-4 sm:gap-12 sm:px-6 lg:items-center">
         <div>
           <p className="font-mono text-xs uppercase tracking-wider text-accent">
             // Quién está detrás
@@ -406,7 +510,7 @@ function QuienEsta() {
             Un sistema construido por alguien que escucha.
           </h2>
           <p className="mt-5 text-muted-foreground">
-            Aisistema no es una empresa con un call center. Soy yo, con más de
+            AISistema no es una empresa con un call center. Soy yo, con más de
             15 años desarrollando software para PyMEs argentinas, atendiendo
             personalmente cada implementación. Sin intermediarios, sin tickets
             que se pierden, sin features que tardan seis meses.
@@ -542,7 +646,6 @@ function LeadForm() {
     const form = e.currentTarget;
     const fd = new FormData(form);
 
-    // Validación de quiz completo
     for (const q of QUIZ) {
       if (!answers[q.name]) {
         toast.error(`Falta responder: ${q.label}`);
@@ -584,7 +687,7 @@ function LeadForm() {
   }
 
   return (
-    <section id="contacto" className="border-b border-border/60 py-14 sm:py-14 sm:py-20 lg:py-28">
+    <section id="contacto" className="border-b border-border/60 py-14 sm:py-20 lg:py-28">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:gap-12 sm:px-6 lg:grid-cols-2 lg:items-start">
         <div>
           <p className="font-mono text-xs uppercase tracking-wider text-accent">
@@ -608,6 +711,14 @@ function LeadForm() {
               </li>
             ))}
           </ul>
+          <div className="mt-8">
+            <p className="mb-3 text-sm text-muted-foreground">¿Preferís escribir directo?</p>
+            <Button asChild variant="outline" className="border-border/70 bg-card/40 font-mono">
+              <a href={WA_URL} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="mr-2 h-4 w-4" /> Hablar por WhatsApp
+              </a>
+            </Button>
+          </div>
         </div>
 
         <form
@@ -691,7 +802,7 @@ function LeadForm() {
       </div>
 
       <Dialog open={!!result} onOpenChange={(o) => !o && setResult(null)}>
-        <DialogContent className="max-w-xl border-border/70 bg-card max-h-[85vh] overflow-y-auto">
+        <DialogContent className="max-h-[85vh] max-w-xl overflow-y-auto border-border/70 bg-card">
           {result && (
             <>
               <DialogHeader>
@@ -726,11 +837,10 @@ function LeadForm() {
   );
 }
 
-
 /* ----------------- FAQ ----------------- */
 function FAQ() {
   return (
-    <section id="faq" className="border-b border-border/60 py-14 sm:py-14 sm:py-20 lg:py-28">
+    <section id="faq" className="border-b border-border/60 py-14 sm:py-20 lg:py-28">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:gap-12 sm:px-6 lg:grid-cols-[1fr_1.6fr]">
         <header>
           <p className="font-mono text-xs uppercase tracking-wider text-accent">
@@ -772,7 +882,7 @@ function FAQ() {
 function Footer() {
   return (
     <footer className="py-10">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 sm:px-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="flex items-center gap-2">
           <span className="grid h-6 w-6 place-items-center rounded bg-primary font-mono text-xs font-bold text-primary-foreground">
             A
@@ -796,7 +906,7 @@ function Footer() {
 function WhatsAppFab() {
   return (
     <a
-      href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20m%C3%A1s%20info%20sobre%20Aisistema"
+      href={WA_URL}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Escribinos por WhatsApp"
