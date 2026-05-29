@@ -65,8 +65,8 @@ const FAQS = [
     a: "Sí. Hacemos la migración inicial de productos, clientes, proveedores y saldos. Trabajamos seguido con planillas de Excel y exportaciones de Tango, Bejerman y sistemas a medida.",
   },
   {
-    q: "¿Es por mes o pago único?",
-    a: "Trabajamos con una implementación inicial + un abono mensual que incluye hosting, actualizaciones y soporte directo. Sin permanencia.",
+    q: "¿Cuánto cuesta el sistema?",
+    a: "El modelo de precios se define después del relevamiento, según tu operatoria y los módulos que necesitás. Puede ser un pago único anual con soporte incluido. Sin permanencias ni costos ocultos.",
   },
   {
     q: "¿Funciona en varias sucursales o vendedores?",
