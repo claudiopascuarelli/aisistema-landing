@@ -59,7 +59,7 @@ const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 const FAQS = [
   {
     q: "¿Cuánto tarda la implementación?",
-    a: "Para una PyME estándar, entre 2 y 4 semanas desde la primera reunión hasta tener el sistema operativo con tus datos cargados, tu equipo capacitado y los módulos que necesitás funcionando.",
+    a: "En la mayoría de los casos, el sistema está operativo en 3 días desde la primera reunión. Con tus datos cargados, tu equipo capacitado y los módulos que necesitás funcionando.",
   },
   {
     q: "¿Se conecta con AFIP para facturar?",
@@ -237,7 +237,7 @@ function Hero() {
           </p>
           <ul className="mt-6 grid max-w-md gap-2 text-sm text-muted-foreground">
             {[
-              "Implementación 2–4 semanas",
+              "Implementación en 3 días",
               "Facturación electrónica AFIP",
               "Multi-sucursal y multi-usuario",
             ].map((b) => (
