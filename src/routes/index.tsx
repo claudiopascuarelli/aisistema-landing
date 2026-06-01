@@ -62,8 +62,8 @@ const FAQS = [
     a: "En la mayoría de los casos, el sistema está operativo en 3 días desde la primera reunión. Con tus datos cargados, tu equipo capacitado y los módulos que necesitás funcionando.",
   },
   {
-    q: "¿Se conecta con AFIP para facturar?",
-    a: "Sí. Emitimos facturas A, B y C electrónicas con CAE, notas de crédito y notas de débito. Integración directa con los WebServices de AFIP.",
+    q: "¿Se conecta con ARCA para facturar?",
+    a: "Sí. Emitimos facturas A, B y C electrónicas con CAE, notas de crédito y notas de débito. Integración directa con los WebServices de ARCA.",
   },
   {
     q: "¿Puedo migrar mis datos actuales (Excel, Tango, otro sistema)?",
@@ -92,7 +92,7 @@ const MODULOS = [
   },
   {
     icon: FileText,
-    title: "Facturación AFIP",
+    title: "Facturación ARCA",
     desc: "Facturas A, B y C electrónicas con CAE. Notas de crédito y débito al instante.",
   },
   {
@@ -238,7 +238,7 @@ function Hero() {
           <ul className="mt-6 grid max-w-md gap-2 text-sm text-muted-foreground">
             {[
               "Implementación en 3 días",
-              "Facturación electrónica AFIP",
+              "Facturación electrónica ARCA",
               "Multi-sucursal y multi-usuario",
             ].map((b) => (
               <li key={b} className="flex items-center gap-2">
