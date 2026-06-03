@@ -43,7 +43,7 @@ import {
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { submitLead } from "@/lib/leads.functions";
-import dashboardMockup from "@/assets/dashboard-mockup.png";
+import dashboardMockup from "@/assets/dashboard-mockup.webp";
 
 const SITE_URL = "https://aisistema.net";
 const TITLE = "AISistema | Gestión e inteligencia artificial para negocios";
