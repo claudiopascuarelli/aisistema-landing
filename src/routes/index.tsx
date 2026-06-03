@@ -144,7 +144,7 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: DESC },
       { property: "og:url", content: SITE_URL },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://aisistema.net" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -272,6 +272,7 @@ function Hero() {
               width={1536}
               height={1024}
               className="h-auto w-full"
+              fetchPriority="high"
             />
           </div>
         </div>
