@@ -153,6 +153,18 @@ function RootShell({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        {/* Google Analytics 4 */}
+                <script async src="https://www.googletagmanager.com/gtag/js?id=G-1QQPX6H5NN" />
+                <script
+                            dangerouslySetInnerHTML={{
+                                          __html: `
+                                                        window.dataLayer = window.dataLayer || [];
+                                                                      function gtag(){dataLayer.push(arguments);}
+                                                                                    gtag('js', new Date());
+                                                                                                  gtag('config', 'G-1QQPX6H5NN');
+                                                                                                              `,
+                            }}
+                          />
         <Scripts />
       </body>
     </html>
