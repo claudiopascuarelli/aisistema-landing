@@ -17,56 +17,62 @@ export type Database = {
       leads: {
         Row: {
           ai_email: string | null
+          articulos: string | null
           created_at: string
           email: string
-          empresa: string
+          empleados: string | null
+          empresa: string | null
           id: string
           mensaje: string | null
           nombre: string
-          q_decisor: string
-          q_empleados: string
-          q_presupuesto: string
-          q_sistema_actual: string
-          q_urgencia: string
+          q_decisor: string | null
+          q_presupuesto: string | null
+          q_sistema_actual: string | null
+          q_urgencia: string | null
           rubro: string | null
-          score: number
-          semaforo: string
+          score: number | null
+          semaforo: string | null
+          sistema: string | null
           telefono: string | null
         }
         Insert: {
           ai_email?: string | null
+          articulos?: string | null
           created_at?: string
           email: string
-          empresa: string
+          empleados?: string | null
+          empresa?: string | null
           id?: string
           mensaje?: string | null
           nombre: string
-          q_decisor: string
-          q_empleados: string
-          q_presupuesto: string
-          q_sistema_actual: string
-          q_urgencia: string
+          q_decisor?: string | null
+          q_presupuesto?: string | null
+          q_sistema_actual?: string | null
+          q_urgencia?: string | null
           rubro?: string | null
-          score?: number
-          semaforo?: string
+          score?: number | null
+          semaforo?: string | null
+          sistema?: string | null
           telefono?: string | null
         }
         Update: {
           ai_email?: string | null
+          articulos?: string | null
           created_at?: string
           email?: string
-          empresa?: string
+          empleados?: string | null
+          empresa?: string | null
           id?: string
           mensaje?: string | null
           nombre?: string
-          q_decisor?: string
-          q_empleados?: string
-          q_presupuesto?: string
-          q_sistema_actual?: string
-          q_urgencia?: string
+          q_decisor?: string | null
+          q_presupuesto?: string | null
+          q_sistema_actual?: string | null
+          q_urgencia?: string | null
           rubro?: string | null
-          score?: number
-          semaforo?: string
+          score?: number | null
+          semaforo?: string | null
+          sistema?: string | null
           telefono?: string | null
         }
         Relationships: []

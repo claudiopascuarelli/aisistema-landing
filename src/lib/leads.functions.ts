@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
@@ -51,7 +52,7 @@ function scoreLead(d: LeadInput): { score: number; semaforo: "verde" | "amarillo
 }
 
 async function draftEmailWithAI(d: LeadInput, score: number, semaforo: string): Promise<string> {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return fallbackEmail(d, semaforo);
 
   const sistema = `Sos un asistente comercial de Aisistema (software de gestión para PyMEs argentinas).
@@ -77,23 +78,13 @@ Devolvé SOLO el mail en texto plano, empezando con "Asunto:".`;
 Calificación interna: score=${score}, semáforo=${semaforo}.`;
 
   try {
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          { role: "system", content: sistema },
-          { role: "user", content: usuario },
-        ],
-      }),
+    const res = await new Anthropic({ apiKey }).messages.create({
+      model: "claude-opus-4-8",
+      max_tokens: 1024, // el mail son máximo 140 palabras
+      system: sistema,
+      messages: [{ role: "user", content: usuario }],
     });
-    if (!res.ok) return fallbackEmail(d, semaforo);
-    const json = await res.json();
-    const text = json?.choices?.[0]?.message?.content?.trim();
+    const text = res.content.find(b => b.type === "text")?.text.trim();
     return text || fallbackEmail(d, semaforo);
   } catch {
     return fallbackEmail(d, semaforo);
@@ -123,7 +114,7 @@ export const submitLead = createServerFn({ method: "POST" })
       email: data.email,
       telefono: data.telefono || null,
       mensaje: data.mensaje || null,
-      q_empleados: data.q_empleados,
+      empleados: data.q_empleados,
       q_sistema_actual: data.q_sistema_actual,
       q_urgencia: data.q_urgencia,
       q_presupuesto: data.q_presupuesto,
