@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import Anthropic from "@anthropic-ai/sdk";
+import nodemailer from "nodemailer";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
@@ -68,8 +69,9 @@ REGLA ABSOLUTA — no inventes nada que no esté en los datos del lead:
 - Hablá de lo que el sistema hace y de cómo resuelve lo que el lead contó. No de quién lo usa.
 - Si no tenés un dato concreto para respaldar una afirmación, no la hagas.
 - No propongas días ni horarios concretos: no conocés la agenda. No prometas plazos ni envío de material.
+- No menciones el piloto, precios ni condiciones comerciales: eso se presenta en la entrevista.
 
-Reglas: máximo 140 palabras, asunto + cuerpo + firma "Equipo Aisistema". No menciones el score ni el semáforo internamente.
+Reglas: máximo 140 palabras, asunto + cuerpo + firma "Claudio Pascuarelli — Aisistema". Escribí en primera persona del singular (yo), nunca "nosotros" ni "el equipo". No menciones el score ni el semáforo internamente.
 Devolvé SOLO el mail en texto plano, empezando con "Asunto:".`;
 
   const usuario = `Lead:
@@ -106,7 +108,7 @@ function fallbackEmail(d: LeadInput, semaforo: string): string {
       : semaforo === "amarillo"
       ? "Antes de coordinar la demo me gustaría conocer un poco más tu operación. ¿Te paso 3 preguntas por mail?"
       : "Si te surge cualquier duda, respondé este mail. Cuando quieras avanzar, estoy a un mensaje.";
-  return `Asunto: ${d.nombre}, gracias por escribirnos\n\nHola ${d.nombre},\n\nRecibí tu consulta sobre ${d.empresa}. ${next}\n\nQuedo atento.\n\nEquipo Aisistema`;
+  return `Asunto: ${d.nombre}, gracias por tu consulta\n\nHola ${d.nombre},\n\nRecibí tu consulta sobre ${d.empresa}. ${next}\n\nQuedo atento.\n\nClaudio Pascuarelli — Aisistema`;
 }
 
 export const submitLead = createServerFn({ method: "POST" })
@@ -137,5 +139,54 @@ export const submitLead = createServerFn({ method: "POST" })
       throw new Error("No pudimos registrar tu consulta. Probá de nuevo o escribinos a hola@aisistema.net.");
     }
 
-    return { ok: true as const, score, semaforo, aiEmail };
+    await notifyClaudio(data, score, semaforo, aiEmail);
+
+    // Al prospecto no le vuelve nada de la calificación: el puntaje, el semáforo y el
+    // borrador de respuesta son internos y van por mail a Claudio.
+    return { ok: true as const };
   });
+
+// Aviso interno por SMTP de Hostinger. Si falla, el lead ya quedó guardado en la base:
+// se registra el error y no se le muestra nada al prospecto.
+async function notifyClaudio(d: LeadInput, score: number, semaforo: string, aiEmail: string) {
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  if (!user || !pass) {
+    console.error("notifyClaudio: faltan SMTP_USER / SMTP_PASS");
+    return;
+  }
+  const icono = { verde: "🟢", amarillo: "🟡", rojo: "🔴" }[semaforo] ?? "";
+  const cuerpo = `${icono} ${semaforo.toUpperCase()} — ${score}/100
+
+Nombre: ${d.nombre}
+Empresa: ${d.empresa}
+Rubro: ${d.rubro || "-"}
+Email: ${d.email}
+Teléfono: ${d.telefono || "-"}
+
+Empleados: ${d.q_empleados}
+Sistema actual: ${d.q_sistema_actual}
+Urgencia: ${d.q_urgencia}
+Presupuesto: ${d.q_presupuesto}
+Decisor: ${d.q_decisor}
+
+Mensaje:
+${d.mensaje || "-"}
+
+──────── Respuesta sugerida (revisala antes de mandarla) ────────
+
+${aiEmail}`;
+  try {
+    await nodemailer
+      .createTransport({ host: "smtp.hostinger.com", port: 465, secure: true, auth: { user, pass } })
+      .sendMail({
+        from: `Formulario aisistema.net <${user}>`,
+        to: process.env.LEADS_NOTIFY_TO || user,
+        replyTo: d.email,
+        subject: `${icono} Nuevo lead: ${d.nombre} — ${d.empresa} (${score}/100)`,
+        text: cuerpo,
+      });
+  } catch (e) {
+    console.error("notifyClaudio: no se pudo enviar", e);
+  }
+}

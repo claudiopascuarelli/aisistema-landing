@@ -543,7 +543,6 @@ function QuienEsta() {
 }
 
 /* ----------------- Lead Form + Quiz Calificación ----------------- */
-type Semaforo = "verde" | "amarillo" | "rojo";
 
 const QUIZ: {
   name:
@@ -607,34 +606,12 @@ const QUIZ: {
   },
 ];
 
-const SEMAFORO_UI: Record<
-  Semaforo,
-  { titulo: string; bajada: string }
-> = {
-  verde: {
-    titulo: "¡Gracias! Tu caso nos interesa",
-    bajada: "Te escribimos dentro de las próximas 24 horas hábiles para coordinar la demo.",
-  },
-  amarillo: {
-    titulo: "¡Gracias por tu consulta!",
-    bajada: "Te escribimos para conocer mejor tu operación antes de la demo.",
-  },
-  rojo: {
-    titulo: "Gracias por escribirnos",
-    bajada: "Te respondemos por mail y quedamos a disposición cuando quieras avanzar.",
-  },
-};
 
 function LeadForm() {
   const submit = useServerFn(submitLead);
   const [loading, setLoading] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [result, setResult] = useState<{
-    semaforo: Semaforo;
-    score: number;
-    aiEmail: string;
-    nombre: string;
-  } | null>(null);
+  const [result, setResult] = useState<{ nombre: string } | null>(null);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -650,7 +627,7 @@ function LeadForm() {
 
     setLoading(true);
     try {
-      const res = await submit({
+      await submit({
         data: {
           nombre: String(fd.get("nombre") ?? ""),
           empresa: String(fd.get("empresa") ?? ""),
@@ -666,9 +643,6 @@ function LeadForm() {
         },
       });
       setResult({
-        semaforo: res.semaforo as Semaforo,
-        score: res.score,
-        aiEmail: res.aiEmail,
         nombre: String(fd.get("nombre") ?? ""),
       });
       form.reset();
@@ -802,20 +776,12 @@ function LeadForm() {
             <>
               <DialogHeader>
                 <DialogTitle className="text-2xl">
-                  {SEMAFORO_UI[result.semaforo].titulo}
+                  ¡Gracias por tu consulta!
                 </DialogTitle>
                 <DialogDescription className="pt-2 text-base">
-                  {SEMAFORO_UI[result.semaforo].bajada}
+                  Te escribo para conocer mejor tu operación antes de la demo.
                 </DialogDescription>
               </DialogHeader>
-              <div className="mt-2 rounded-lg border border-border/60 bg-background/60 p-4">
-                <p className="mb-2 font-mono text-xs uppercase tracking-wider text-accent">
-                  Un adelanto de nuestra respuesta
-                </p>
-                <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed text-foreground/90">
-                  {result.aiEmail}
-                </pre>
-              </div>
             </>
           )}
         </DialogContent>

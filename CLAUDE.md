@@ -77,7 +77,7 @@ escribió *"Ya acompañamos a varias distribuidoras del rubro con resultados con
 falso, y salía firmado por Claudio. Si tocás ese prompt, la regla se queda.
 
 Otras reglas del prompt: español rioplatense (vos/tenés), máximo 140 palabras, empieza
-con "Asunto:", firma "Equipo Aisistema", nunca menciona el score ni el semáforo.
+con "Asunto:", firma "Claudio Pascuarelli — Aisistema" en primera persona (Claudio trabaja solo), nunca menciona el score ni el semáforo.
 
 ---
 
