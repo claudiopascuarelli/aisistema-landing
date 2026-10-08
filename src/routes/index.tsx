@@ -186,17 +186,31 @@ function Home() {
 }
 
 /* ----------------- Nav ----------------- */
+// Logo AISistema (Desktop/AISISTEMA ERP/LOGO AISISTEMA.png) redibujado en SVG:
+// en el PNG "AI" es casi negro y no se ve sobre el fondo oscuro; acá toma el color del texto.
+function Logo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 196 34" className={className} role="img" aria-label="AISistema">
+      <g fill="#7EA9DB">
+        <rect x="0" y="3" width="26" height="5" rx="2.5" />
+        <rect x="0" y="15.5" width="26" height="5" rx="2.5" />
+        <rect x="0" y="27" width="26" height="5" rx="2.5" />
+        <rect x="33" y="1" width="4" height="32" rx="1" />
+      </g>
+      <text x="60" y="27" fontFamily="system-ui, -apple-system, 'Segoe UI', sans-serif" fontSize="27" fontWeight="700">
+        <tspan fill="currentColor">AI</tspan>
+        <tspan fill="#7EA9DB">Sistema</tspan>
+      </text>
+    </svg>
+  );
+}
+
 function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a href="#top" className="flex items-center gap-2">
-          <span className="grid h-8 w-8 place-items-center rounded-md bg-primary font-mono text-sm font-bold text-primary-foreground">
-            A
-          </span>
-          <span className="font-mono text-sm font-semibold tracking-tight">
-            aisistema
-          </span>
+          <Logo className="h-7" />
         </a>
         <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
           <a href="#modulos" className="hover:text-foreground">Módulos</a>
@@ -759,13 +773,17 @@ function LeadForm() {
           </div>
 
           <Button type="submit" size="lg" disabled={loading} className="mt-2 font-mono">
-            {loading ? "Calificando tu caso…" : "Solicitar demo"}
+            {loading ? "Enviando…" : "Solicitar demo"}
           </Button>
           <p className="text-center text-xs text-muted-foreground">
             O escribinos a{" "}
             <a className="underline underline-offset-2" href="mailto:claudio@aisistema.net">
               claudio@aisistema.net
             </a>
+          </p>
+          <p className="text-center text-xs text-muted-foreground/80">
+            Usamos tus datos solo para responder tu consulta y evaluar si podemos ayudarte. No
+            los compartimos. Podés pedir que los borremos escribiendo a claudio@aisistema.net.
           </p>
         </form>
       </div>
@@ -837,10 +855,7 @@ function Footer() {
     <footer className="py-10">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="flex items-center gap-2">
-          <span className="grid h-6 w-6 place-items-center rounded bg-primary font-mono text-xs font-bold text-primary-foreground">
-            A
-          </span>
-          <span className="font-mono">aisistema</span>
+          <Logo className="h-5" />
           <span className="ml-2">© {new Date().getFullYear()}</span>
         </div>
         <div className="flex flex-wrap items-center gap-4">
