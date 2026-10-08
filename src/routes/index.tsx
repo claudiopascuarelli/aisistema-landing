@@ -609,25 +609,19 @@ const QUIZ: {
 
 const SEMAFORO_UI: Record<
   Semaforo,
-  { dot: string; ring: string; titulo: string; bajada: string }
+  { titulo: string; bajada: string }
 > = {
   verde: {
-    dot: "bg-emerald-400",
-    ring: "ring-emerald-400/30",
-    titulo: "¡Encaja muy bien!",
-    bajada: "Te escribimos hoy mismo para coordinar la demo.",
+    titulo: "¡Gracias! Tu caso nos interesa",
+    bajada: "Te escribimos dentro de las próximas 24 horas hábiles para coordinar la demo.",
   },
   amarillo: {
-    dot: "bg-amber-400",
-    ring: "ring-amber-400/30",
-    titulo: "Hay buen potencial",
-    bajada: "Te contactamos para entender mejor tu caso antes de avanzar.",
+    titulo: "¡Gracias por tu consulta!",
+    bajada: "Te escribimos para conocer mejor tu operación antes de la demo.",
   },
   rojo: {
-    dot: "bg-rose-400",
-    ring: "ring-rose-400/30",
     titulo: "Gracias por escribirnos",
-    bajada: "Te mandamos material y quedamos a disposición cuando quieras avanzar.",
+    bajada: "Te respondemos por mail y quedamos a disposición cuando quieras avanzar.",
   },
 };
 
@@ -807,29 +801,21 @@ function LeadForm() {
           {result && (
             <>
               <DialogHeader>
-                <div className="flex items-center gap-3">
-                  <span
-                    className={`h-3 w-3 rounded-full ring-4 ${SEMAFORO_UI[result.semaforo].dot} ${SEMAFORO_UI[result.semaforo].ring}`}
-                  />
-                  <DialogTitle className="text-2xl">
-                    {SEMAFORO_UI[result.semaforo].titulo}
-                  </DialogTitle>
-                </div>
+                <DialogTitle className="text-2xl">
+                  {SEMAFORO_UI[result.semaforo].titulo}
+                </DialogTitle>
                 <DialogDescription className="pt-2 text-base">
                   {SEMAFORO_UI[result.semaforo].bajada}
                 </DialogDescription>
               </DialogHeader>
               <div className="mt-2 rounded-lg border border-border/60 bg-background/60 p-4">
                 <p className="mb-2 font-mono text-xs uppercase tracking-wider text-accent">
-                  // Vista previa del mail que te vamos a enviar
+                  Un adelanto de nuestra respuesta
                 </p>
                 <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed text-foreground/90">
                   {result.aiEmail}
                 </pre>
               </div>
-              <p className="text-xs text-muted-foreground">
-                Calificación interna: {result.score}/100
-              </p>
             </>
           )}
         </DialogContent>

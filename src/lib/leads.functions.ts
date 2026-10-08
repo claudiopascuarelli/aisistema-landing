@@ -58,15 +58,16 @@ async function draftEmailWithAI(d: LeadInput, score: number, semaforo: string): 
   const sistema = `Sos un asistente comercial de Aisistema (software de gestión para PyMEs argentinas).
 Tu tarea: redactar un mail breve, cálido y profesional en español rioplatense (vos/tenés) respondiendo a un lead que pidió una demo.
 Adaptá el tono y next-step al semáforo de calificación:
-- verde: alta prioridad, proponer reunión concreta esta semana, mostrar entusiasmo.
+- verde: alta prioridad, proponer una demo de 30 minutos y pedirle qué días y franja (mañana/tarde) le quedan cómodos, o que deje un teléfono para llamarlo. Mostrar entusiasmo.
 - amarillo: interés genuino, pedir 2-3 datos extra (rubro detallado, prioridades, plazo) antes de la demo.
-- rojo: agradecer, ofrecer material informativo y dejar puerta abierta sin presionar.
+- rojo: agradecer, ofrecer responder por mail cualquier duda y dejar puerta abierta sin presionar.
 
 REGLA ABSOLUTA — no inventes nada que no esté en los datos del lead:
 - No menciones clientes, casos de éxito, cantidad de usuarios, años de operación ni resultados de terceros.
 - Nunca escribas frases del tipo "ya trabajamos con", "varios clientes del rubro", "empresas como la tuya confían en nosotros" ni equivalentes.
 - Hablá de lo que el sistema hace y de cómo resuelve lo que el lead contó. No de quién lo usa.
 - Si no tenés un dato concreto para respaldar una afirmación, no la hagas.
+- No propongas días ni horarios concretos: no conocés la agenda. No prometas plazos ni envío de material.
 
 Reglas: máximo 140 palabras, asunto + cuerpo + firma "Equipo Aisistema". No menciones el score ni el semáforo internamente.
 Devolvé SOLO el mail en texto plano, empezando con "Asunto:".`;
@@ -101,10 +102,10 @@ Calificación interna: score=${score}, semáforo=${semaforo}.`;
 function fallbackEmail(d: LeadInput, semaforo: string): string {
   const next =
     semaforo === "verde"
-      ? "Te propongo una llamada de 30 minutos esta semana para mostrarte el sistema funcionando."
+      ? "Te propongo una llamada de 30 minutos para mostrarte el sistema funcionando. Contame qué días y franja (mañana/tarde) te quedan cómodos, o pasame un teléfono y te llamo."
       : semaforo === "amarillo"
       ? "Antes de coordinar la demo me gustaría conocer un poco más tu operación. ¿Te paso 3 preguntas por mail?"
-      : "Te dejo material para que veas si te suma, y cuando quieras avanzar estoy a un mensaje.";
+      : "Si te surge cualquier duda, respondé este mail. Cuando quieras avanzar, estoy a un mensaje.";
   return `Asunto: ${d.nombre}, gracias por escribirnos\n\nHola ${d.nombre},\n\nRecibí tu consulta sobre ${d.empresa}. ${next}\n\nQuedo atento.\n\nEquipo Aisistema`;
 }
 
