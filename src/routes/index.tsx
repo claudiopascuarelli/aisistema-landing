@@ -43,31 +43,27 @@ import {
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { submitLead } from "@/lib/leads.functions";
+import { Nav, Footer, WhatsAppFab, WA_URL } from "@/components/site";
 import dashboardMockup from "@/assets/dashboard-mockup.webp";
 
 const SITE_URL = "https://aisistema.net";
-const TITLE = "AISistema | Gestión e inteligencia artificial para negocios";
+const TITLE = "Sistema de gestión para PyMEs argentinas | AISistema";
 const DESC =
-  "Soluciones de gestión, automatización e inteligencia artificial para PyMEs y comercios. Ordená ventas, stock, clientes, caja y procesos administrativos desde un solo lugar.";
+  "Ventas, stock, facturación electrónica ARCA, clientes y reportes en un solo sistema web, multi-sucursal. Implementación personal, sin intermediarios.";
 
-const WA_NUMBER = "5491162488744";
-const WA_MSG = encodeURIComponent(
-  "Hola, quiero información sobre AIGestión. Mi negocio es: _____ y actualmente gestiono con: _____"
-);
-const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 
 const FAQS = [
   {
     q: "¿Cuánto tarda la implementación?",
-    a: "En la mayoría de los casos, el sistema está operativo en 3 días desde la primera reunión. Con tus datos cargados, tu equipo capacitado y los módulos que necesitás funcionando.",
+    a: "Depende de los módulos que uses y de la cantidad de datos a cargar. El plazo se define en el relevamiento y queda acordado antes de empezar.",
   },
   {
     q: "¿Se conecta con ARCA para facturar?",
-    a: "Sí. Emitimos facturas A, B y C electrónicas con CAE, notas de crédito y notas de débito. Integración directa con los WebServices de ARCA.",
+    a: "Sí. Emite facturas A, B y C electrónicas con CAE, notas de crédito y notas de débito. Integración directa con los WebServices de ARCA.",
   },
   {
     q: "¿Puedo migrar mis datos actuales (Excel, Tango, otro sistema)?",
-    a: "Sí. Hacemos la migración inicial de productos, clientes, proveedores y saldos. Trabajamos seguido con planillas de Excel y exportaciones de Tango, Bejerman y sistemas a medida.",
+    a: "Sí. La migración inicial de productos, clientes, proveedores y saldos se planifica en el relevamiento, a partir de planillas de Excel o de lo que tu sistema actual permita exportar.",
   },
   {
     q: "¿Cuánto cuesta el sistema?",
@@ -75,7 +71,7 @@ const FAQS = [
   },
   {
     q: "¿Funciona en varias sucursales o vendedores?",
-    a: "Sí. Manejamos multi-sucursal, multi-usuario con permisos por rol y stock independiente o consolidado según necesites.",
+    a: "Sí. Funciona con varias sucursales y usuarios, con permisos por rol y stock independiente o consolidado según necesites.",
   },
 ];
 
@@ -142,9 +138,9 @@ export const Route = createFileRoute("/")({
       { name: "description", content: DESC },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESC },
-      { property: "og:url", content: SITE_URL },
+      { property: "og:url", content: `${SITE_URL}/` },
     ],
-    links: [{ rel: "canonical", href: "https://aisistema.net" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
     scripts: [
       {
         type: "application/ld+json",
@@ -173,7 +169,6 @@ function Home() {
         <Modulos />
         <AISection />
         <Problemas />
-        <VideoPlaceholder />
         <QuienEsta />
         <LeadForm />
         <FAQ />
@@ -186,48 +181,6 @@ function Home() {
 }
 
 /* ----------------- Nav ----------------- */
-// Logo AISistema (Desktop/AISISTEMA ERP/LOGO AISISTEMA.png) redibujado en SVG:
-// en el PNG "AI" es casi negro y no se ve sobre el fondo oscuro; acá toma el color del texto.
-function Logo({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 196 34" className={className} role="img" aria-label="AISistema">
-      <g fill="#7EA9DB">
-        <rect x="0" y="3" width="26" height="5" rx="2.5" />
-        <rect x="0" y="15.5" width="26" height="5" rx="2.5" />
-        <rect x="0" y="27" width="26" height="5" rx="2.5" />
-        <rect x="33" y="1" width="4" height="32" rx="1" />
-      </g>
-      <text x="60" y="27" fontFamily="system-ui, -apple-system, 'Segoe UI', sans-serif" fontSize="27" fontWeight="700">
-        <tspan fill="currentColor">AI</tspan>
-        <tspan fill="#7EA9DB">Sistema</tspan>
-      </text>
-    </svg>
-  );
-}
-
-function Nav() {
-  return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="#top" className="flex items-center gap-2">
-          <Logo className="h-7" />
-        </a>
-        <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
-          <a href="#modulos" className="hover:text-foreground">Módulos</a>
-          <a href="#problemas" className="hover:text-foreground">Para quién</a>
-          <a href="#equipo" className="hover:text-foreground">Equipo</a>
-          <a href="#faq" className="hover:text-foreground">FAQ</a>
-        </nav>
-        <Button asChild size="sm" className="font-mono">
-          <a href={WA_URL} target="_blank" rel="noopener noreferrer">
-            <MessageCircle className="mr-2 h-4 w-4" /> Hablar por WhatsApp
-          </a>
-        </Button>
-      </div>
-    </header>
-  );
-}
-
 /* ----------------- Hero ----------------- */
 function Hero() {
   return (
@@ -241,17 +194,17 @@ function Hero() {
             AISistema · Primer producto: AIGestión
           </div>
           <h1 className="mt-5 text-[2rem] leading-[1.1] sm:text-4xl md:text-5xl lg:text-[3.4rem] sm:leading-[1.05]">
-            Gestión e inteligencia artificial{" "}
-            <span className="text-accent">para tu negocio</span>.
+            Sistema de gestión con IA{" "}
+            <span className="text-accent">para tu PyME</span>.
           </h1>
           <p className="mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
-            AIGestión, nuestro primer producto, ayuda a PyMEs y comercios a
+            AIGestión, el primer producto de AISistema, ayuda a PyMEs y comercios a
             ordenar ventas, stock, clientes, caja, reportes y procesos
             administrativos desde un solo lugar.
           </p>
           <ul className="mt-6 grid max-w-md gap-2 text-sm text-muted-foreground">
             {[
-              "Implementación en 3 días",
+              "Implementación personal",
               "Facturación electrónica ARCA",
               "Multi-sucursal y multi-usuario",
             ].map((b) => (
@@ -479,39 +432,6 @@ function Problemas() {
   );
 }
 
-/* ----------------- Video Placeholder ----------------- */
-function VideoPlaceholder() {
-  return (
-    <section className="border-b border-border/60 py-14 sm:py-20 lg:py-28">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 text-center">
-        <p className="font-mono text-xs uppercase tracking-wider text-accent">
-          // Video
-        </p>
-        <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl">
-          Conocé AISistema en menos de un minuto
-        </h2>
-        <p className="mt-4 mx-auto max-w-xl text-muted-foreground">
-          Estamos preparando un video breve para mostrar cómo AISistema puede
-          ayudar a ordenar la gestión de un negocio y sumar automatización de
-          forma simple.
-        </p>
-        <div className="mt-10 mx-auto flex aspect-video max-w-2xl items-center justify-center rounded-xl border border-border/70 bg-card/60">
-          <div className="text-center">
-            <div className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-border/70 bg-primary/10 text-accent transition hover:bg-primary/20">
-              <svg className="ml-1 h-7 w-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-            <p className="mt-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              Próximamente
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ----------------- Quién está detrás ----------------- */
 function QuienEsta() {
   return (
@@ -525,14 +445,18 @@ function QuienEsta() {
             Un sistema construido por alguien que escucha.
           </h2>
           <p className="mt-5 text-muted-foreground">
-            AISistema no es una empresa con un call center. Soy yo, con más de
-            15 años desarrollando software para PyMEs argentinas, atendiendo
-            personalmente cada implementación. Sin intermediarios, sin tickets
-            que se pierden, sin features que tardan seis meses.
+            AISistema no es una empresa con un call center. Soy yo, Claudio
+            Pascuarelli: más de 40 años en administración y operaciones de
+            empresas industriales. Armé AIGestión porque necesitaba un sistema
+            así y no encontré uno que resolviera la operación real de una PyME.
           </p>
           <p className="mt-3 text-muted-foreground">
-            Si tenés una necesidad puntual de tu rubro, la discutimos y la
-            resolvemos. Esa es la diferencia con un sistema enlatado.
+            Atiendo personalmente cada implementación: hablás directamente con
+            quien configura tu sistema.
+          </p>
+          <p className="mt-3 text-muted-foreground">
+            Si tenés una necesidad puntual de tu rubro, la evaluamos juntos. Esa
+            es la diferencia con un sistema enlatado.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild variant="outline" className="border-border/70 bg-card/40">
@@ -654,6 +578,7 @@ function LeadForm() {
           q_urgencia: answers.q_urgencia,
           q_presupuesto: answers.q_presupuesto,
           q_decisor: answers.q_decisor,
+          origen: new URLSearchParams(window.location.search).get("origen") ?? "",
         },
       });
       setResult({
@@ -850,37 +775,3 @@ function FAQ() {
 }
 
 /* ----------------- Footer ----------------- */
-function Footer() {
-  return (
-    <footer className="py-10">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <div className="flex items-center gap-2">
-          <Logo className="h-5" />
-          <span className="ml-2">© {new Date().getFullYear()}</span>
-        </div>
-        <div className="flex flex-wrap items-center gap-4">
-          <a href="mailto:claudio@aisistema.net" className="hover:text-foreground">
-            claudio@aisistema.net
-          </a>
-          <span className="opacity-30">·</span>
-          <span>Buenos Aires, Argentina</span>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-/* ----------------- WhatsApp FAB ----------------- */
-function WhatsAppFab() {
-  return (
-    <a
-      href={WA_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Escribinos por WhatsApp"
-      className="fixed bottom-5 right-5 z-50 grid h-12 w-12 place-items-center rounded-full bg-accent p-3 text-accent-foreground shadow-lg shadow-accent/30 transition hover:scale-105"
-    >
-      <MessageCircle className="h-5 w-5" />
-    </a>
-  );
-}

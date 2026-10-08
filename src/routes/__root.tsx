@@ -11,18 +11,19 @@ import {
 import appCss from "../styles.css?url";
 
 const SITE_URL = "https://aisistema.net";
-const SITE_TITLE =
-  "Aisistema — Software de gestión a medida para PyMEs argentinas";
+const SITE_TITLE = "Sistema de gestión para PyMEs argentinas | AISistema";
 const SITE_DESC =
-  "Sistema de gestión modular para PyMEs: ventas, stock, facturación AFIP, clientes y reportes. Implementación rápida, atención personalizada.";
+  "Ventas, stock, facturación electrónica ARCA, clientes y reportes en un solo sistema web, multi-sucursal. Implementación personal, sin intermediarios.";
 
 const ORG_JSONLD = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Aisistema",
+  name: "AISistema",
   url: SITE_URL,
   logo: `${SITE_URL}/icon.png`,
-  sameAs: [],
+  email: "claudio@aisistema.net",
+  founder: { "@type": "Person", name: "Claudio Pascuarelli" },
+  sameAs: ["https://www.linkedin.com/in/claudio-pascuarelli-8b413570/"],
   contactPoint: [
     {
       "@type": "ContactPoint",
@@ -36,11 +37,11 @@ const ORG_JSONLD = {
 const SOFTWARE_JSONLD = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "Aisistema",
+  name: "AIGestión",
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
   description: SITE_DESC,
-  offers: { "@type": "Offer", price: "0", priceCurrency: "ARS" },
+  publisher: { "@type": "Organization", name: "AISistema", url: SITE_URL },
 };
 
 function NotFoundComponent() {
@@ -104,18 +105,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: SITE_TITLE },
       { name: "description", content: SITE_DESC },
-      { name: "author", content: "Aisistema" },
+      { name: "author", content: "Claudio Pascuarelli" },
       { name: "theme-color", content: "#0c2340" },
       { property: "og:title", content: SITE_TITLE },
       { property: "og:description", content: SITE_DESC },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "es_AR" },
       { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: `${SITE_URL}/og-image.png` },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: `${SITE_URL}/og-image.png` },
       { name: "twitter:title", content: SITE_TITLE },
       { name: "twitter:description", content: SITE_DESC },
     ],
     links: [
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/icon.png" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {

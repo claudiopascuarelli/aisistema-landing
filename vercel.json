@@ -1,6 +1,14 @@
 {
   "outputDirectory": "dist/client",
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.aisistema.net" }],
+      "destination": "https://aisistema.net/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/((?!assets/|robots\\.txt|sitemap\\.xml).*)", "destination": "/api/ssr" }
+    { "source": "/((?!assets/|robots\\.txt|sitemap\\.xml|favicon\\.svg|icon\\.png|og-image\\.png).*)", "destination": "/api/ssr" }
   ]
 }

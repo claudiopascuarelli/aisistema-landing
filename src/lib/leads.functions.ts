@@ -24,6 +24,8 @@ const LeadSchema = z.object({
   q_urgencia: z.enum(Q_OPTIONS.urgencia),
   q_presupuesto: z.enum(Q_OPTIONS.presupuesto),
   q_decisor: z.enum(Q_OPTIONS.decisor),
+  // Página por la que llegó (?origen= en el link). Sin origen = portada o directo.
+  origen: z.string().max(60).optional().default(""),
 });
 
 type LeadInput = z.infer<typeof LeadSchema>;
@@ -132,6 +134,7 @@ export const submitLead = createServerFn({ method: "POST" })
       score,
       semaforo,
       ai_email: aiEmail,
+      origen: data.origen || null,
     });
 
     if (error) {
@@ -172,6 +175,8 @@ Decisor: ${d.q_decisor}
 
 Mensaje:
 ${d.mensaje || "-"}
+
+Llegó desde: ${d.origen || "portada / directo"}
 
 ──────── Respuesta sugerida (revisala antes de mandarla) ────────
 

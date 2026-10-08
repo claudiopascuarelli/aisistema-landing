@@ -2,7 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://aisistema.net/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://aisistema.net/sistema-de-gestion-para-distribuidoras</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://aisistema.net/alternativa-a-tango-gestion</loc>
+    <lastmod>2026-10-08</lastmod>
   </url>
 </urlset>
