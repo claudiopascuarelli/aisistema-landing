@@ -671,7 +671,7 @@ function LeadForm() {
           </p>
           <ul className="mt-6 space-y-2 text-sm text-muted-foreground">
             {[
-              "Respuesta en menos de 24 hs hábiles",
+              "Te respondemos a la brevedad",
               "Calificamos tu caso en el momento",
               "Atiende directamente quien va a implementar",
             ].map((b) => (
