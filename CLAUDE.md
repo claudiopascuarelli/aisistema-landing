@@ -101,14 +101,18 @@ porque el desajuste era contra la base.
 
 ```bash
 npx tsc --noEmit && bun run build
+node -e "import('./dist/server/server.js').then(async m=>console.log((await m.default.fetch(new Request('https://aisistema.net/'))).status))"
 ```
+
+La última línea renderiza la página en local: tiene que dar 200. El 8-oct-2026 el build
+pasó y producción dio 500 por versiones desalineadas de TanStack (Start y react-router
+se actualizan juntos).
 
 Y después probar el flujo real: enviar el formulario en producción, verificar que el
-lead llegó a la base, y **borrar el registro de prueba**.
+lead llegó a la base y que el aviso llegó por mail, y **borrar el registro de prueba**.
 
-```bash
-bun ~/Desktop/actualizar-leads.ts   # exporta los leads a CSV
-```
+Cada lead le llega a Claudio por mail (SMTP de Hostinger, `SMTP_USER` / `SMTP_PASS` en
+Vercel). No hay exportación a CSV: si hace falta ver los leads, están en Supabase.
 
 ---
 
