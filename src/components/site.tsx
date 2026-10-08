@@ -13,7 +13,14 @@ export const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 // en el PNG "AI" es casi negro y no se ve sobre el fondo oscuro; acá toma el color del texto.
 function Logo({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 196 34" className={className} role="img" aria-label="AISistema">
+    <svg
+      viewBox="0 0 196 34"
+      className={className}
+      role="img"
+      aria-label="AISistema"
+      // Halo suave para que el logo se despegue del fondo oscuro.
+      style={{ filter: "drop-shadow(0 0 6px rgba(126,169,219,0.55)) drop-shadow(0 0 14px rgba(126,169,219,0.25))" }}
+    >
       <g fill="#7EA9DB">
         <rect x="0" y="3" width="26" height="5" rx="2.5" />
         <rect x="0" y="15.5" width="26" height="5" rx="2.5" />
