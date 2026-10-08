@@ -16,30 +16,22 @@ formulario de demo y calificarlos automáticamente.
 | Dominios | aisistema.net, www.aisistema.net |
 | DNS | Hostinger (solo DNS y correo; el sitio NO se sirve desde ahí) |
 | Framework | TanStack Start (SSR), Vite, Node 24 |
-| Base de datos | Supabase **provisionada por Lovable Cloud** — no es un proyecto Supabase propio |
+| Base de datos | Supabase **propio** (cuenta claudio@aisistema.net), proyecto `ctyslonviurkychommqy`, desde el 2026-10-08. Antes era de Lovable Cloud |
 | Analytics | GA4 propiedad `393748429` / `536404992`, flujo WEBAISISTEMA |
 
 **Deploy:** push a `main` → Vercel buildea y publica solo. No hay paso manual.
 
 ---
 
-## ⚠️ La trampa principal: las migraciones mienten
+## Base de datos
 
-`supabase/migrations/*.sql` **describe un esquema que nunca se aplicó**. La base real
-la creó Lovable Cloud con otra estructura. Esto ya causó un bug que tuvo el formulario
-roto en producción durante semanas.
+Desde el 2026-10-08 la base es un Supabase propio. Se consulta y modifica con el conector
+MCP `supabase-aisistema`, configurado solo para esta carpeta y fijado a este proyecto.
+La tabla `leads` se creó con la migración `create_leads`. RLS está activado y no tiene
+políticas: solo escribe el service role.
 
-**La fuente de verdad es la base, no el repo.** Para consultar el esquema real:
-
-```bash
-curl -s "$SUPABASE_URL/rest/v1/" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" \
-  | python3 -c "import sys,json; d=json.load(sys.stdin)['definitions']['leads']; \
-    [print(k, v.get('format'), 'REQ' if k in d.get('required',[]) else '') \
-     for k,v in d['properties'].items()]"
-```
-
-**No corrijas desajustes escribiendo SQL contra esa base** — la administra Lovable.
-Cuando el código y el esquema no coincidan, **cambiá el código**.
+`supabase/migrations/*.sql` del repo **no** corresponde a esta base: es de la época de
+Lovable y nunca se aplicó. No lo uses como referencia. La fuente de verdad es la base.
 
 ### Esquema real de `leads`
 
@@ -122,9 +114,8 @@ bun ~/Desktop/actualizar-leads.ts   # exporta los leads a CSV
 
 ## Qué NO hacer
 
-- **No escribir SQL contra la base** — la administra Lovable Cloud.
+- **No usar `supabase/migrations/` del repo** — es de la época de Lovable.
 - **No editar `types.ts` a mano** — es autogenerado.
-- **No confiar en `supabase/migrations/`** — no refleja la realidad.
 - **No pushear a `principal`** — esa rama no dispara nada.
 - **No poner claves en el código** — el repo es público.
 - **No relajar la regla de no inventar** en el prompt del mail.
