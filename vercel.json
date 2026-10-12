@@ -3,12 +3,26 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.aisistema.net" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "www.aisistema.net"
+        }
+      ],
       "destination": "https://aisistema.net/$1",
       "permanent": true
     }
   ],
   "rewrites": [
-    { "source": "/((?!assets/|robots\\.txt|sitemap\\.xml|favicon\\.svg|icon\\.png|og-image\\.png).*)", "destination": "/api/ssr" }
+    {
+      "source": "/((?!api/|assets/|robots\\.txt|sitemap\\.xml|favicon\\.svg|icon\\.png|og-image\\.png).*)",
+      "destination": "/api/ssr"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/despertador",
+      "schedule": "0 12 * * *"
+    }
   ]
 }
