@@ -74,6 +74,9 @@ export function Footer() {
           <a href="/alternativa-a-tango-gestion" className="hover:text-foreground">
             Alternativa a Tango
           </a>
+          <a href="/alternativa-a-xubio" className="hover:text-foreground">
+            Alternativa a Xubio
+          </a>
           <span className="opacity-30">·</span>
           <a href="mailto:claudio@aisistema.net" className="hover:text-foreground">
             claudio@aisistema.net

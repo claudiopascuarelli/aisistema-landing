@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AlternativaATangoGestionRouteImport } from './routes/alternativa-a-tango-gestion'
+import { Route as AlternativaAXubioRouteImport } from './routes/alternativa-a-xubio'
 import { Route as SistemaDeGestionParaDistribuidorasRouteImport } from './routes/sistema-de-gestion-para-distribuidoras'
 
 const IndexRoute = IndexRouteImport.update({
@@ -24,6 +25,11 @@ const AlternativaATangoGestionRoute =
     path: '/alternativa-a-tango-gestion',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AlternativaAXubioRoute = AlternativaAXubioRouteImport.update({
+  id: '/alternativa-a-xubio',
+  path: '/alternativa-a-xubio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SistemaDeGestionParaDistribuidorasRoute =
   SistemaDeGestionParaDistribuidorasRouteImport.update({
     id: '/sistema-de-gestion-para-distribuidoras',
@@ -34,17 +40,20 @@ const SistemaDeGestionParaDistribuidorasRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/alternativa-a-tango-gestion': typeof AlternativaATangoGestionRoute
+  '/alternativa-a-xubio': typeof AlternativaAXubioRoute
   '/sistema-de-gestion-para-distribuidoras': typeof SistemaDeGestionParaDistribuidorasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/alternativa-a-tango-gestion': typeof AlternativaATangoGestionRoute
+  '/alternativa-a-xubio': typeof AlternativaAXubioRoute
   '/sistema-de-gestion-para-distribuidoras': typeof SistemaDeGestionParaDistribuidorasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/alternativa-a-tango-gestion': typeof AlternativaATangoGestionRoute
+  '/alternativa-a-xubio': typeof AlternativaAXubioRoute
   '/sistema-de-gestion-para-distribuidoras': typeof SistemaDeGestionParaDistribuidorasRoute
 }
 export interface FileRouteTypes {
@@ -52,22 +61,26 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/alternativa-a-tango-gestion'
+    | '/alternativa-a-xubio'
     | '/sistema-de-gestion-para-distribuidoras'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/alternativa-a-tango-gestion'
+    | '/alternativa-a-xubio'
     | '/sistema-de-gestion-para-distribuidoras'
   id:
     | '__root__'
     | '/'
     | '/alternativa-a-tango-gestion'
+    | '/alternativa-a-xubio'
     | '/sistema-de-gestion-para-distribuidoras'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AlternativaATangoGestionRoute: typeof AlternativaATangoGestionRoute
+  AlternativaAXubioRoute: typeof AlternativaAXubioRoute
   SistemaDeGestionParaDistribuidorasRoute: typeof SistemaDeGestionParaDistribuidorasRoute
 }
 
@@ -87,6 +100,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AlternativaATangoGestionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/alternativa-a-xubio': {
+      id: '/alternativa-a-xubio'
+      path: '/alternativa-a-xubio'
+      fullPath: '/alternativa-a-xubio'
+      preLoaderRoute: typeof AlternativaAXubioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sistema-de-gestion-para-distribuidoras': {
       id: '/sistema-de-gestion-para-distribuidoras'
       path: '/sistema-de-gestion-para-distribuidoras'
@@ -100,6 +120,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AlternativaATangoGestionRoute: AlternativaATangoGestionRoute,
+  AlternativaAXubioRoute: AlternativaAXubioRoute,
   SistemaDeGestionParaDistribuidorasRoute:
     SistemaDeGestionParaDistribuidorasRoute,
 }
