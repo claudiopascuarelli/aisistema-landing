@@ -87,8 +87,9 @@ function Page() {
         <li>Ventas: presupuestos, pedidos, remitos y punto de venta.</li>
         <li>Stock en tiempo real, con varios depósitos.</li>
         <li>
-          Compras: cargás la factura del proveedor y el stock se actualiza en el mismo
-          paso, sin cargar la mercadería dos veces.
+          Compras: cargás la factura del proveedor (PDF, foto o cualquier formato
+          digital) y el stock se actualiza en el mismo paso, sin cargar la mercadería
+          dos veces.
         </li>
         <li>Facturación electrónica ARCA: facturas A, B y C con CAE.</li>
         <li>Clientes con cuenta corriente e historial.</li>

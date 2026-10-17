@@ -90,7 +90,7 @@ const MODULOS = [
   {
     icon: Truck,
     title: "Compras",
-    desc: "Carga controlada de artículos desde la factura del proveedor: el stock se genera en el mismo paso. Esencial para distribuidoras y mayoristas.",
+    desc: "Carga controlada de artículos desde la factura del proveedor, en PDF, foto o cualquier formato digital: el stock se genera en el mismo paso. Esencial para distribuidoras y mayoristas.",
   },
   {
     icon: FileText,
