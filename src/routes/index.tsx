@@ -8,6 +8,7 @@ import {
   Users,
   BarChart3,
   Building2,
+  Truck,
   Check,
   MessageCircle,
   Linkedin,
@@ -85,6 +86,11 @@ const MODULOS = [
     icon: Boxes,
     title: "Stock",
     desc: "Control de inventario en tiempo real, alertas de mínimos y movimientos entre depósitos.",
+  },
+  {
+    icon: Truck,
+    title: "Compras",
+    desc: "Carga controlada de artículos desde la factura del proveedor: el stock se genera en el mismo paso. Esencial para distribuidoras y mayoristas.",
   },
   {
     icon: FileText,
