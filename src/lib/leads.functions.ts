@@ -137,29 +137,35 @@ export const submitLead = createServerFn({ method: "POST" })
       origen: data.origen || null,
     });
 
-    if (error) {
-      console.error("submitLead insert error", error);
-      throw new Error("No pudimos registrar tu consulta. Probá de nuevo o escribinos a hola@aisistema.net.");
+    // Si la base falla (por ejemplo, Supabase pausó el proyecto) el lead igual le llega
+    // a Claudio por mail. Solo se muestra error si no quedó en ningún lado.
+    if (error) console.error("submitLead insert error", error);
+    const avisado = await notifyClaudio(data, score, semaforo, aiEmail, !error);
+    if (error && !avisado) {
+      throw new Error("No pudimos registrar tu consulta. Probá de nuevo o escribinos a claudio@aisistema.net.");
     }
-
-    await notifyClaudio(data, score, semaforo, aiEmail);
 
     // Al prospecto no le vuelve nada de la calificación: el puntaje, el semáforo y el
     // borrador de respuesta son internos y van por mail a Claudio.
     return { ok: true as const };
   });
 
-// Aviso interno por SMTP de Hostinger. Si falla, el lead ya quedó guardado en la base:
-// se registra el error y no se le muestra nada al prospecto.
-async function notifyClaudio(d: LeadInput, score: number, semaforo: string, aiEmail: string) {
+// Aviso interno por SMTP de Hostinger. Devuelve si el mail salió.
+async function notifyClaudio(
+  d: LeadInput,
+  score: number,
+  semaforo: string,
+  aiEmail: string,
+  guardado: boolean,
+): Promise<boolean> {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
   if (!user || !pass) {
     console.error("notifyClaudio: faltan SMTP_USER / SMTP_PASS");
-    return;
+    return false;
   }
   const icono = { verde: "🟢", amarillo: "🟡", rojo: "🔴" }[semaforo] ?? "";
-  const cuerpo = `${icono} ${semaforo.toUpperCase()} — ${score}/100
+  const cuerpo = `${guardado ? "" : "⚠️ NO QUEDÓ GUARDADO EN LA BASE (¿Supabase pausado?). Este mail es el único registro.\n\n"}${icono} ${semaforo.toUpperCase()} — ${score}/100
 
 Nombre: ${d.nombre}
 Empresa: ${d.empresa}
@@ -188,10 +194,12 @@ ${aiEmail}`;
         from: `Formulario aisistema.net <${user}>`,
         to: process.env.LEADS_NOTIFY_TO || user,
         replyTo: d.email,
-        subject: `${icono} Nuevo lead: ${d.nombre} — ${d.empresa} (${score}/100)`,
+        subject: `${guardado ? "" : "⚠️ SIN GUARDAR · "}${icono} Nuevo lead: ${d.nombre} — ${d.empresa} (${score}/100)`,
         text: cuerpo,
       });
+    return true;
   } catch (e) {
     console.error("notifyClaudio: no se pudo enviar", e);
+    return false;
   }
 }
